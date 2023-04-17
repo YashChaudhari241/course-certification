@@ -4,6 +4,8 @@ import { Connect } from "./Connect";
 import Link from "next/link";
 import Nossr from "../Nossr";
 import { useRouter } from "next/router";
+import { useCookies } from "react-cookie";
+
 // import { useTheme } from "next-themes"
 const inactiveLink =
   " text-gray-700 md:hover:text-blue-700 md:dark:hover:text-white dark:text-gray-400";
@@ -11,6 +13,8 @@ const activeLink = " md:text-blue-700 dark:text-white";
 export default () => {
   // const { systemTheme, theme, setTheme } = useTheme()
   const { pathname } = useRouter();
+  const [cookies, setCookie, removeCookie] = useCookies(["access-token"]);
+
   // const renderThemeChanger = () => {
   //     const currentTheme = theme === "system" ? systemTheme   : theme
   //     if (currentTheme === "dark") {
@@ -41,12 +45,21 @@ export default () => {
                         className="h-6 mr-3 sm:h-9"
                         alt="Rental Logo"
                     />   */}
-          <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
+          <span className="self-center text-xl font-semibold whitespace-nowrap text-black">
             Certify
           </span>
         </Link>
         <div className="flex md:order-2 items-center">
           <Nossr>
+            {cookies["jwt"] && <p>Signed in: {cookies["jwt"].name}</p>}
+            {cookies["jwt"] && (
+              <button
+                className="text-white bg-blue-700 ml-3 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-3 md:mr-0 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                // onClick={() => removeCookie("jwt")}
+              >
+                Logout
+              </button>
+            )}
             <Connect />
           </Nossr>
           <button
@@ -86,7 +99,7 @@ export default () => {
                 }
                 aria-current="page"
               >
-                My Profile{" "}
+                Home{" "}
               </Link>
             </li>
             <li>

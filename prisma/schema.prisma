@@ -29,6 +29,8 @@ model User {
   isAdmin       Boolean       @default(false)
   isAuthority   Boolean       @default(false)
   walletAddress String        @unique
+  nonce         String?
+  verified      Boolean       @default(false)
   certificates  Certificate[]
 
   @@map(name: "users")
